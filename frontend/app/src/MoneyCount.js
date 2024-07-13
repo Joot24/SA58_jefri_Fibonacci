@@ -19,7 +19,7 @@ export default function MoneyCount() {
     setTargetAmount(event.target.value);
   };
 
-  const MONEY_COUNT_API = "http://129.150.57.2/:8080/api/count";
+  const MONEY_COUNT_API = "http://129.150.57.2:8080/api/count";
 
   function handleCalculateClick(event) {
     event.preventDefault();
