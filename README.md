@@ -30,6 +30,7 @@ Counts the minimum number of each selected coin denominations required to make u
    ```
 
 4. **Run the Application**<br>
+   Navigate to the root directory containing docker-compose.yml
    ```sh
    docker-compose up
    ```
