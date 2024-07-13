@@ -1,0 +1,11 @@
+services:
+  backend:
+    image: sa58_jefri_fibonacci_backend
+    ports:
+      - "8080:8080"
+  frontend:
+    image: sa58_jefri_fibonacci_frontend
+    ports:
+      - "80:80"
+    depends_on:
+      - backend
