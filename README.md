@@ -23,14 +23,14 @@ Counts the minimum number of each selected coin denominations required to make u
    docker build -t <your-image-name>
    ```
 
-3. **Build ReactJS Application Docker Image**
+3. **Build ReactJS Application Docker Image**<br>
    Navigate to the ReactJS project's root directory (\frontend\app)
    ```sh
    docker build -t <your-image-name>
    ```
 
 4. **Run the Application**<br>
-   Update the ReactJS Application to make API calls to localhost instead
+   Update the ReactJS Application to make API calls to localhost instead<br>
    Navigate to the root directory containing docker-compose.yml
    ```sh
    docker-compose up
