@@ -30,11 +30,12 @@ Counts the minimum number of each selected coin denominations required to make u
    ```
 
 4. **Run the Application**<br>
+   Update the ReactJS Application to make API calls to localhost instead
    Navigate to the root directory containing docker-compose.yml
    ```sh
    docker-compose up
    ```
 
-5. **Access the Application**<br>
+6. **Access the Application**<br>
    Open your browser and go to [http://localhost:80](http://localhost:80).
 
