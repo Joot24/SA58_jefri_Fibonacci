@@ -8,26 +8,27 @@ export default function MoneyCount() {
   const [checkbox, setCheckbox] = useState(
     DENOMINATIONS.reduce((acc, denom) => ({ ...acc, [denom]: false }), {})
   );
-  const [target, setTarget] = useState('');
+  const [targetAmount, setTargetAmount] = useState('');
   const [results, setResults] = useState(null);
+  const [errors, setErrors] = useState('');
 
   const handleToggle = ({target}) =>
     setCheckbox(s => ({...s, [target.name]: !s[target.name]}));
 
   const handleTargetChange = (event) => {
-    setTarget(event.target.value);
+    setTargetAmount(event.target.value);
   };
 
   const MONEY_COUNT_API = "http://localhost:8080/api/count";
 
   function handleCalculateClick(event) {
     event.preventDefault();
-    const selectedDenominations = Object.keys(checkbox).filter(key => checkbox[key]);
+    const selectedDenominations = DENOMINATIONS.filter(denom => checkbox[denom]);
 
     const data = {
-      targetAmount: target,
-      denominationSelected: Object.values(checkbox),
-      denominationAmountList: Object.keys(checkbox).map(parseFloat)
+      targetAmount: targetAmount,
+      denominationSelected: DENOMINATIONS.map(denom => checkbox[denom]),
+      denominationAmountList: DENOMINATIONS
     };
 
     axios.post(MONEY_COUNT_API, data,)
@@ -41,9 +42,9 @@ export default function MoneyCount() {
       .catch(e => {
         console.log(e);
         // Updates the errors state variable to display validation errors
-        // if (e.response.status === 400 || e.response.status === 500){
-        //   setErrors(e.response.data)
-        // }
+        if (e.response.status === 400 || e.response.status === 500){
+          setErrors(e.response.data)
+        }
       })
   }
 
@@ -55,7 +56,6 @@ export default function MoneyCount() {
     }
   }
 
-
   return (
     <div className="App">
 
@@ -64,7 +64,7 @@ export default function MoneyCount() {
         <input
           type='text'
           name='target'
-          value={target}
+          value={targetAmount}
           onChange={handleTargetChange}
         /><br/>
         <div>
@@ -77,9 +77,9 @@ export default function MoneyCount() {
                   onChange={handleToggle}
                   name={denom.toString()}
                   checked={checkbox[denom]}
-                  id={`checkbox-${denom}`}
+                  id={'checkbox-${denom}'}
                 />
-                <label htmlFor={`checkbox-${denom}`}>${denom.toFixed(2)}</label>
+                <label htmlFor={'checkbox-${denom}'}>${denom.toFixed(2)}</label>
               </div>
             ))}
           </div>
@@ -87,6 +87,10 @@ export default function MoneyCount() {
 
         <button type="submit">Calculate</button>
       </form>
+      <div>
+        {errors.targetAmount && <p>{errors.targetAmount}</p>}
+        {errors.denominationSelected && <p>{errors.denominationSelected}</p>}
+      </div>
       <div>
         {getResult()}
       </div>
