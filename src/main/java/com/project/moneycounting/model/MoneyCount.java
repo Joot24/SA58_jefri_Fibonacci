@@ -16,7 +16,12 @@ public class MoneyCount {
                 .map(BigDecimal::new)
                 .collect(Collectors.toList());
 
-    public MoneyCount() {}
+    public MoneyCount(){}
+
+    public MoneyCount(BigDecimal targetAmount, List<Boolean> denominationSelected) {
+        this.targetAmount = targetAmount;
+        this.denominationSelected = denominationSelected;
+    }
 
     public BigDecimal getTargetAmount() {
         return targetAmount;
