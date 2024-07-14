@@ -30,6 +30,11 @@ public class MoneyCountController {
         binder.addValidators(validator);
     }
 
+    @GetMapping("count")
+    public ResponseEntity<List<BigDecimal>> countForm(){
+        return new ResponseEntity<>(MoneyCount.DENOMINATION_AMOUNTS, HttpStatus.OK);
+    }
+
     @PostMapping("count")
     public ResponseEntity<?> countResult(@Valid @RequestBody MoneyCount moneyCount, BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
@@ -50,17 +55,15 @@ public class MoneyCountController {
 
         // List of denomination selected in checkbox
         List<Boolean> denominationSelected = moneyCount.getDenominationSelected();
-        // List of all denominations possible
-        List<BigDecimal> denominationAmountList = moneyCount.getDenominationAmountList();
         // List to store counts of each denomination
         List<Integer> denominationCountList = new ArrayList<>();
 
-        // Start from biggest denomination
+        // Start from the biggest denomination
         for (int i = denominationSelected.size() - 1; i >= 0; i--) {
             Integer denominationCount = 0;
             // Only consider denominations selected in checkbox
-            if (denominationSelected.get(i) == true) {
-                BigDecimal denominationAmount = denominationAmountList.get(i);
+            if (denominationSelected.get(i)) {
+                BigDecimal denominationAmount = MoneyCount.DENOMINATION_AMOUNTS.get(i);
                 while (targetAmount.compareTo(denominationAmount) >= 0) {
                     targetAmount = targetAmount.subtract(denominationAmount);
                     denominationCount++;
